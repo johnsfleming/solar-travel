@@ -114,6 +114,7 @@ angular.module("SolarTravel", [])
 		$scope.calculated = false;
 		$scope.totext = false;
 		$scope.birthday = "mm-dd-yyyy";
+		console.log(new Date($scope.birthday) instanceof Date);
 		$scope.today = new Date();
 		$scope.units = 'Miles';
 	
