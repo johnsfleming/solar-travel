@@ -58,9 +58,6 @@
 	</div>
 	<div class="row">
 		<div class="col-12 text-center">
-			<h1>
-				<button class="btn btn-default" type="button" ng-click="milesCalculator(birthday, units); setCalculated(myForm.birthday.$valid)">Calculate</button>
-			</h1>
 			<div class="alert alert-info" ng-if="myForm.birthday.$dirty && myForm.birthday.$error.max">
 	    		<span>Birthday should not be greater than current date</span>
 	    	</div>
@@ -122,12 +119,12 @@ angular.module("SolarTravel", [])
 		
 		var tick = function() {
 			$scope.currentTime = Date.now();
-			$scope.distanceCalculator($scope.birthday, $scope.unit);
+			$scope.distanceCalculator($scope.birthday);
 		}
 		tick();
 		$interval(tick,1000);
 
-		$scope.distanceCalculator = function(birthday, unit){
+		$scope.distanceCalculator = function(birthday){
 			$scope.difference = ($scope.currentTime - $scope.birthday)
 			$scope.meters = Math.round($scope.difference / 1000 * 30);
 			$scope.miles = Math.round($scope.difference / 60 / 60 * 67);
