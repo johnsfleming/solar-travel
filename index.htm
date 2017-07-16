@@ -145,7 +145,8 @@ angular.module("SolarTravel", [])
 		
 		var tick = function() {
 			$scope.currentTime = Date.now();
-			if(new Date($scope.birthday) instanceof Date){
+			var test = new Date($scope.birthday);
+			if(test instanceof Date && !isNaN(test.valueOf())){
 				$scope.distanceCalculator();
 			}
 		}
