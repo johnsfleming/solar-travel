@@ -32,7 +32,7 @@
 	body{
 		background: url(http://wallpapercave.com/wp/MwWqtVu.jpg);
 	}
-	#main{
+	.hastext{
 		background-color:rgba(255, 255, 255, 0.7);
 		width:95vw;
 	}
@@ -41,11 +41,25 @@
  		display: block!important;
   		visibility: hidden;
 	}
+	#spacer{
+		margin-top:40px;
+		background-color: rgba(0, 0, 0, 0.7)!important;
+	}
   </style>
 </HEAD>
 
 <BODY ng-app="SolarTravel" ng-controller="solarCtrl">
-<div class="container-fluid" id="main">
+<div class="container-fluid">
+	<div class="hastext">
+	<div class="row">
+		<div class="col-12 text-center">
+			<h1>How Far Have You Traveled Around The Sun?</h1>
+		</div>
+	</div>
+	</div>
+	<div class="row" id="spacer">
+	</div>
+	<div class="hastext">
 	<div class="row">
 		<div class="col-12 text-center">
 			<h1>Enter Your Birthday:</h1>
@@ -77,7 +91,7 @@
 					<input type="radio" name="unit" id="imperial" checked ng-model="units" value="Miles" ng-click="distanceCalculator(birthday, units)">Imperial</input>
 				</label>
 				<label>
-					<input type="radio" name="unit" id="metric "ng-model="units" value="Kilometers" ng-click="distanceCalculator(birthday, units)">Metric</input>
+					<input type="radio" name="unit" id="metric "ng-model="units" value="Km" ng-click="distanceCalculator(birthday, units)">Metric</input>
 				</label>
 			</div>
 			<div class="col-sm-3 text-center">
@@ -105,6 +119,7 @@
 				<p class="date">{{fiftybillion | date}}</p>
 			</div>
 		</div>
+	</div>
 	</div>
 </div>
 
