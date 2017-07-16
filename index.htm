@@ -122,10 +122,7 @@ angular.module("SolarTravel", [])
 		
 		var tick = function() {
 			$scope.currentTime = Date.now();
-			if($scope.calculated){
-				$scope.distanceCalculator($scope.birthday, $scope.unit);
-			}
-
+			$scope.distanceCalculator($scope.birthday, $scope.unit);
 		}
 		tick();
 		$interval(tick,1000);
@@ -153,13 +150,6 @@ angular.module("SolarTravel", [])
 				$scope.distance = numberWithCommas($scope.distance);
 			}
 			
-		}
-		$scope.setCalculated = function(valid){
-			setTimeout(function (){
-				if(valid){
-					$scope.calculated = true;
-				}
-			}, 0);
 		}
 	})
 
