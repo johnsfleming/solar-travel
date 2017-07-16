@@ -119,12 +119,12 @@ angular.module("SolarTravel", [])
 		
 		var tick = function() {
 			$scope.currentTime = Date.now();
-			$scope.distanceCalculator($scope.birthday);
+			$scope.distanceCalculator();
 		}
 		tick();
 		$interval(tick,1000);
 
-		$scope.distanceCalculator = function(birthday){
+		$scope.distanceCalculator = function(){
 			$scope.difference = ($scope.currentTime - $scope.birthday)
 			$scope.meters = Math.round($scope.difference / 1000 * 30);
 			$scope.miles = Math.round($scope.difference / 60 / 60 * 67);
