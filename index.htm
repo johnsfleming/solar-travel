@@ -52,7 +52,7 @@
 		</div>
 		<div class="col-12 text-center">
 			<form name="myForm">
-				<input type="date" name="birthday" required ng-model="birthday" max="{{today}}">
+				<input type="date" name="birthday" required ng-init="" ng-model="birthday" max="{{today}}">
 	    	</form>
 		</div>
 	</div>
@@ -67,7 +67,7 @@
 		</div>
 	</div>
 
-	<div id="results" ng-show="myForm.birthday.$valid && distance">
+	<div id="results" ng-show="myForm.birthday.$dirty && myForm.birthday.$valid && distance">
 		<div class="row">
 			<div class="col-12 text-center">
 				<h1 class="lead">You Have Traveled:</h1>
@@ -116,7 +116,7 @@ angular.module("SolarTravel", [])
 	.controller("solarCtrl", function($scope, $filter, $interval) {
 		$scope.calculated = false;
 		$scope.totext = false;
-		$scope.birthday = "mm-dd-yyyy";
+		$scope.birthday = new Date();
 		$scope.today = new Date();
 		$scope.units = 'Miles';
 		
