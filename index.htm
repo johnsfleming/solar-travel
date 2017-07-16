@@ -52,7 +52,7 @@
 		</div>
 		<div class="col-12 text-center">
 			<form name="myForm">
-				<input type="date" name="birthday" required ng-model="birthday" max="{{today}}">
+				<input type="date" name="birthday" required ng-model="birthday.birthday" max="{{today}}">
 	    	</form>
 		</div>
 	</div>
@@ -113,25 +113,25 @@ angular.module("SolarTravel", [])
 	.controller("solarCtrl", function($scope, $filter, $interval) {
 		$scope.calculated = false;
 		$scope.totext = false;
-		$scope.birthday = "mm-dd-yyyy";
+		$scope.birthday = {};
 		$scope.today = new Date();
 		$scope.units = 'Miles';
 	
 		$scope.distanceCalculator = function(){
-			$scope.difference = ($scope.currentTime - $scope.birthday)
+			$scope.difference = ($scope.currentTime - $scope.birthday.birthday)
 			$scope.meters = Math.round($scope.difference / 1000 * 30);
 			$scope.miles = Math.round($scope.difference / 60 / 60 * 67);
 			if($scope.units=="Miles"){
 				$scope.distance = $scope.miles;
-				$scope.billion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 621);
-				$scope.twentyfivebillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 15522);
+				$scope.billion = new Date($scope.birthday.birthday.getFullYear(), $scope.birthday.birthday.getMonth(), $scope.birthday.getDate() + 621);
+				$scope.twentyfivebillion = new Date($scope.birthday.birthday.getFullYear(), $scope.birthday.birthday.getMonth(), $scope.birthday.getDate() + 15522);
 				$scope.fiftybillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 31044);
 			}
 			else{
 				$scope.distance = $scope.meters;
-				$scope.billion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 385);
-				$scope.twentyfivebillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 9645);
-				$scope.fiftybillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 19290);
+				$scope.billion = new Date($scope.birthday.birthday.getFullYear(), $scope.birthday.birthday.getMonth(), $scope.birthday.getDate() + 385);
+				$scope.twentyfivebillion = new Date($scope.birthday.birthday.getFullYear(), $scope.birthday.birthday.getMonth(), $scope.birthday.getDate() + 9645);
+				$scope.fiftybillion = new Date($scope.birthday.birthday.getFullYear(), $scope.birthday.birthday.getMonth(), $scope.birthday.getDate() + 19290);
 			}
 			if($scope.totext){
 				$scope.distance = capitalizeFirstLetter(numToWords($scope.distance));
