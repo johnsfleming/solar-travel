@@ -113,7 +113,7 @@ angular.module("SolarTravel", [])
 	.controller("solarCtrl", function($scope, $filter, $interval) {
 		$scope.calculated = false;
 		$scope.totext = false;
-		$scope.birthday = new Date();
+		$scope.birthday = "mm-dd-yyyy";
 		$scope.today = new Date();
 		$scope.units = 'Miles';
 	
@@ -144,7 +144,9 @@ angular.module("SolarTravel", [])
 		
 		var tick = function() {
 			$scope.currentTime = Date.now();
-			$scope.distanceCalculator();
+			if(new Date($scope.birthday) instanceof Date){
+				$scope.distanceCalculator();
+			}
 		}
 		tick();
 		$interval(tick,1000);
