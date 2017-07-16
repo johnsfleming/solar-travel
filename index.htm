@@ -61,7 +61,7 @@
 			<h1>
 				<button class="btn btn-default" type="button" ng-click="milesCalculator(birthday, units); setCalculated(myForm.birthday.$valid)">Calculate</button>
 			</h1>
-			<div class="alert alert-info" ng-if="myForm.birthday.$dirty && myForm.validity.rangeOverflow">
+			<div class="alert alert-info" ng-if="myForm.birthday.$dirty && myForm.birthday.$valid">
 	    		<span>Birthday should not be greater than current date</span>
 	    	</div>
 		</div>
@@ -136,9 +136,15 @@ angular.module("SolarTravel", [])
 			$scope.miles = Math.round($scope.difference / 60 / 60 * 67);
 			if($scope.units=="Miles"){
 				$scope.distance = $scope.miles;
+				$scope.billion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 619);
+				$scope.twentyfivebillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 15490);
+				$scope.fiftybillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 30980);
 			}
 			else{
 				$scope.distance = $scope.meters;
+				$scope.billion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 385);
+				$scope.twentyfivebillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 9625);
+				$scope.fiftybillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 19250);
 			}
 			if($scope.totext){
 				$scope.distance = capitalizeFirstLetter(numToWords($scope.distance));
@@ -146,11 +152,7 @@ angular.module("SolarTravel", [])
 			else{
 				$scope.distance = numberWithCommas($scope.distance);
 			}
-			$scope.billion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 385);
-
-			$scope.twentyfivebillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 9625);
-
-			$scope.fiftybillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 19250);
+			
 		}
 		$scope.setCalculated = function(valid){
 			setTimeout(function (){
