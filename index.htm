@@ -41,9 +41,6 @@
  		display: block!important;
   		visibility: hidden;
 	}
-	#results, #error_message{
-		visibility:hidden;
-	}
   </style>
 </HEAD>
 
@@ -59,7 +56,7 @@
 	    	</form>
 		</div>
 	</div>
-	<div class="row" id="error_message">
+	<div class="row" ng-cloak>
 		<div class="col-12 text-center">
 			<div class="alert alert-info" ng-if="myForm.birthday.$dirty && myForm.birthday.$error.max">
 	    			<span>Birthday should not be greater than current date</span>
@@ -67,7 +64,7 @@
 		</div>
 	</div>
 
-	<div id="results" ng-show="myForm.birthday.$dirty && myForm.birthday.$valid && distance">
+	<div id="results" ng-show="myForm.birthday.$dirty && myForm.birthday.$valid && distance" ng-cloak>
 		<div class="row">
 			<div class="col-12 text-center">
 				<h1 class="lead">You Have Traveled:</h1>
@@ -116,7 +113,6 @@ angular.module("SolarTravel", [])
 	.controller("solarCtrl", function($scope, $filter, $interval) {
 		$scope.calculated = false;
 		$scope.totext = false;
-		$scope.birthday = "mm-dd-yyyy";
 		$scope.today = new Date();
 		$scope.units = 'Miles';
 	
