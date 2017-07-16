@@ -41,6 +41,9 @@
  		display: block!important;
   		visibility: hidden;
 	}
+	#results, #error_message{
+		visibility:hidden;
+	}
   </style>
 </HEAD>
 
@@ -56,11 +59,11 @@
 	    	</form>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" id="error_message">
 		<div class="col-12 text-center">
 			<div class="alert alert-info" ng-if="myForm.birthday.$dirty && myForm.birthday.$error.max">
-	    		<span>Birthday should not be greater than current date</span>
-	    	</div>
+	    			<span>Birthday should not be greater than current date</span>
+	    		</div>
 		</div>
 	</div>
 
@@ -114,7 +117,6 @@ angular.module("SolarTravel", [])
 		$scope.calculated = false;
 		$scope.totext = false;
 		$scope.birthday = "mm-dd-yyyy";
-		console.log(new Date($scope.birthday) instanceof Date);
 		$scope.today = new Date();
 		$scope.units = 'Miles';
 	
