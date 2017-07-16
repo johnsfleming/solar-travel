@@ -1,0 +1,151 @@
+
+<!DOCTYPE HTML>
+<HTML lang='en'>
+<HEAD>
+	<meta charset="UTF-8">
+	<title>Solar Travel</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script type="text/javascript" src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="toword.js"></script>
+  
+  <style type="text/css">
+	input[type=date]::-webkit-inner-spin-button {
+	    -webkit-appearance: none;
+	    display: none;
+	}
+	#distance{
+		font-size:3em;
+	}
+	.date{
+		font-size:2em;
+		font-weight:bold;
+	}
+  </style>
+</HEAD>
+
+<BODY ng-app="SolarTravel" ng-controller="solarCtrl">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12 text-center">
+			<h1>Enter Your Birthday:</h1>
+		</div>
+		<div class="col-12 text-center">
+			<form name="myForm">
+				<input type="date" name="birthday" required ng-model="birthday" max="{{today}}">
+	    	</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 text-center">
+			<h1>
+				<button class="btn btn-default" type="button" ng-click="milesCalculator(birthday, units); setCalculated(myForm.birthday.$valid)">Calculate</button>
+			</h1>
+			<div class="alert alert-info" ng-show="myForm.birthday.$dirty && myForm.birthday.$invalid">
+	    		<span ng-show="myForm.birthday.$error.max">Birthday should not be greater than current date</span>
+	    	</div>
+		</div>
+	</div>
+	<div class="row" ng-show="calculated">
+		<div class="col-12 text-center">
+			<h1 class="lead">You Have Traveled:</h1>
+			<p id="distance">{{distance}} {{units}}</p>
+		</div>
+		<div class="col-12 text-center">
+			<input type="radio" name="unit" checked ng-model="units" value="Miles" ng-click="distanceCalculator(birthday, units)">Imperial</input>
+			<input type="radio" name="unit" ng-model="units" value="Kilometers" ng-click="distanceCalculator(birthday, units)">Metric</input>
+		</div>
+		<div class="col-12 text-center">
+			<input type="radio" name="display" ng-model="totext" ng-value="false">Numbers</input>
+			<input type="radio" name="display" checked ng-model="totext" ng-value="true">Words</input>
+		</div>
+	</div>
+	<div class="row" ng-show="calculated">
+		<div class="col-sm-4 text-center">
+			<h1 class="lead">You Hit <em>1 Billion {{units}}</em> On:</h1>
+			<p class="date">{{billion}}</p>
+		</div>
+		<div class="col-sm-4 text-center">
+			<h1 class="lead">You Hit <em>25 Billion {{units}}</em> On:</h1>
+			<p class="date">{{twentyfivebillion}}</p>
+		</div>
+		<div class="col-sm-4 text-center">
+			<h1 class="lead">You Hit <em>50 Billion {{units}}</em> On:</h1>
+			<p class="date">{{fiftybillion}}</p>
+		</div>
+	</div>
+</div>
+
+<script>
+angular.module("SolarTravel", [])
+	.controller("solarCtrl", function($scope, $filter, $interval) {
+		$scope.calculated = false;
+		$scope.totext = false;
+		$scope.birthday = new Date();
+		$scope.today = new Date();
+		$scope.units = 'Miles';
+		$scope.billion = new Date();
+		$scope.twentyfivebillion = new Date();
+		$scope.fiftybillion = new Date();
+		
+		var tick = function() {
+			$scope.currentTime = Date.now();
+			if($scope.calculated){
+				$scope.distanceCalculator($scope.birthday, $scope.unit);
+			}
+		}
+		tick();
+		$interval(tick,1000);
+
+		$scope.distanceCalculator = function(birthday, unit){
+			$scope.difference = ($scope.currentTime - $scope.birthday)
+			$scope.meters = Math.round($scope.difference / 1000 * 30);
+			$scope.miles = Math.round($scope.difference / 60 / 60 * 67);
+			if($scope.units=="Miles"){
+				$scope.distance = $scope.miles;
+			}
+			else{
+				$scope.distance = $scope.meters;
+			}
+			if($scope.totext){
+				$scope.distance = capitalizeFirstLetter(numToWords($scope.distance));
+			}
+			else{
+				$scope.distance = numberWithCommas($scope.distance);
+			}
+		}
+		$scope.setCalculated = function(valid){
+			setTimeout(function (){
+				if(valid){
+					$scope.calculated = true;
+				}
+			}, 0);
+			
+			$scope.billion = new Date($scope.billion.setDate($scope.birthday.getDate() + 385));
+			var dd = $scope.billion.getDate();
+			var mm = $scope.billion.getMonth() + 1;
+			var y = $scope.billion.getFullYear();
+
+			$scope.billion = mm + '/'+ dd + '/'+ y;
+
+			$scope.twentyfivebillion = new Date($scope.twentyfivebillion.setDate($scope.birthday.getDate() + 9625));
+			var dd = $scope.twentyfivebillion.getDate();
+			var mm = $scope.twentyfivebillion.getMonth() + 1;
+			var y = $scope.twentyfivebillion.getFullYear();
+
+			$scope.twentyfivebillion = mm + '/'+ dd + '/'+ y;
+
+			$scope.fiftybillion = new Date($scope.fiftybillion.setDate($scope.birthday.getDate() + 19250));
+			var dd = $scope.fiftybillion.getDate();
+			var mm = $scope.fiftybillion.getMonth() + 1;
+			var y = $scope.fiftybillion.getFullYear();
+
+			$scope.fiftybillion = mm + '/'+ dd + '/'+ y;
+		}
+	})
+
+</script>
+</BODY>
+</html>
