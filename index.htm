@@ -119,9 +119,6 @@ angular.module("SolarTravel", [])
 		$scope.birthday = new Date();
 		$scope.today = new Date();
 		$scope.units = 'Miles';
-		$scope.billion = new Date();
-		$scope.twentyfivebillion = new Date();
-		$scope.fiftybillion = new Date();
 		
 		var tick = function() {
 			$scope.currentTime = Date.now();
@@ -149,6 +146,11 @@ angular.module("SolarTravel", [])
 			else{
 				$scope.distance = numberWithCommas($scope.distance);
 			}
+			$scope.billion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 385);
+
+			$scope.twentyfivebillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 9625);
+
+			$scope.fiftybillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 19250);
 		}
 		$scope.setCalculated = function(valid){
 			setTimeout(function (){
@@ -156,13 +158,6 @@ angular.module("SolarTravel", [])
 					$scope.calculated = true;
 				}
 			}, 0);
-			
-			
-			$scope.billion = new Date($scope.billion.setDate($scope.birthday.getDate() + 385));
-
-			$scope.twentyfivebillion = new Date($scope.twentyfivebillion.setDate($scope.birthday.getDate() + 9625));
-
-			$scope.fiftybillion = new Date($scope.fiftybillion.setDate($scope.birthday.getDate() + 19250));
 		}
 	})
 
