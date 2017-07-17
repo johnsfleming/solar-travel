@@ -5,144 +5,114 @@
 	<meta charset="UTF-8">
 	<title>Solar Travel</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="solar.css">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	<script type="text/javascript" src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="toword.js"></script>
-  
-  <style type="text/css">
-	input[type=date]::-webkit-inner-spin-button {
-	    -webkit-appearance: none;
-	    display: none;
-	}
-	label{
-		margin-right:10px;
-	}
-	input[type=radio]:hover, label:hover{
-		cursor: pointer;
-	}
-	#distance{
-		font-size:3em;
-	}
-	.date{
-		font-size:2em;
-		font-weight:bold;
-	}
-	body{
-		background: url(http://wallpapercave.com/wp/MwWqtVu.jpg);
-	}
-	.hastext{
-		background-color:rgba(255, 255, 255, 0.7);
-		width:95vw;
-	}
-	.ng-hide:not(.ng-hide-animate){
- 		 /* These are just alternative ways of hiding an element */
- 		display: block!important;
-  		visibility: hidden;
-	}
-	#spacer{
-		margin-top:40px;
-		background-color: rgba(0, 0, 0, 0.7)!important;
-	}
-  </style>
 </HEAD>
 
 <BODY ng-app="SolarTravel" ng-controller="solarCtrl">
 <div class="container-fluid">
-	<div class="hastext">
 	<div class="row">
-		<div class="col-12 text-center">
-			<h1>How Far Have You Traveled Around The Sun?</h1>
-		</div>
-	</div>
-	</div>
-	<div class="row" id="spacer">
-	</div>
-	<div class="hastext">
-	<div class="row">
-		<div class="col-12 text-center">
-			<h1>Enter Your Birthday:</h1>
-		</div>
-		<div class="col-12 text-center">
-			<form name="myForm">
-				<input type="date" name="birthday" required ng-model="birthday" max="{{today}}">
-	    	</form>
-		</div>
-	</div>
-	<div class="row" ng-cloak>
-		<div class="col-12 text-center">
-			<div class="alert alert-info" ng-if="myForm.birthday.$dirty && myForm.birthday.$error.max">
-	    			<span>Birthday should not be greater than current date</span>
-	    		</div>
+		<div class="col-12 text-center panel">
+			<h2>How Far Have You Traveled Around The Sun?</h2>
 		</div>
 	</div>
 
-	<div id="results" ng-show="myForm.birthday.$dirty && myForm.birthday.$valid && distance" ng-cloak>
+	<div id="spacer">
+	</div>
+
+	<div class="hastext">
 		<div class="row">
 			<div class="col-12 text-center">
-				<h1 class="lead">You Have Traveled:</h1>
-				<p id="distance">{{distance}} {{units}}</p>
+				<h1>Enter Your Birthday:</h1>
 			</div>
-			<div class="col-sm-3 text-center">
-			</div>
-			<div class="col-sm-3 text-center">
-				<label>
-					<input type="radio" name="unit" id="imperial" checked ng-model="units" value="Miles" ng-click="distanceCalculator(birthday, units)">Imperial</input>
-				</label>
-				<label>
-					<input type="radio" name="unit" id="metric "ng-model="units" value="Km" ng-click="distanceCalculator(birthday, units)">Metric</input>
-				</label>
-			</div>
-			<div class="col-sm-3 text-center">
-				<label>
-					<input type="radio" name="display" id="numbers" ng-model="totext" ng-value="false">Numbers</input>
-				</label>
-				<label>
-					<input type="radio" name="display" id="words" checked ng-model="totext" ng-value="true">Words</input>
-				</label>
-			</div>
-			<div class="col-sm-3 text-center">
+			<div class="col-12 text-center">
+				<form name="myForm">
+					<input type="date" name="birthday" required ng-model="birthday" max="{{today}}" min="1900-01-01">
+		    	</form>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-4 text-center">
-				<h1 class="lead">You Hit <em>1 Billion {{units}}</em> On:</h1>
-				<p class="date">{{billion | date}}</p>
+		<div class="row" ng-cloak>
+			<div class="col-12 text-center">
+				<div class="alert alert-info" ng-if="myForm.birthday.$dirty && myForm.birthday.$error.max">
+		    			<span>Birthday should not be greater than current date</span>
+		    		</div>
 			</div>
-			<div class="col-sm-4 text-center">
-				<h1 class="lead">You Hit <em>25 Billion {{units}}</em> On:</h1>
-				<p class="date">{{twentyfivebillion | date}}</p>
+		</div>
+
+		<div id="results" ng-show="myForm.birthday.$dirty && myForm.birthday.$valid && distance" ng-cloak>
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1 class="lead">You Have Traveled:</h1>
+					<p id="distance">{{distance}} {{units}}</p>
+				</div>
+				<div class="col-sm-3 text-center">
+				</div>
+				<div class="col-sm-3 text-center">
+					<label>
+						<input type="radio" name="unit" id="imperial" checked ng-model="units" value="Miles" ng-click="distanceCalculator()">Imperial</input>
+					</label>
+					<label>
+						<input type="radio" name="unit" id="metric "ng-model="units" value="Km" ng-click="distanceCalculator()">Metric</input>
+					</label>
+				</div>
+				<div class="col-sm-3 text-center">
+					<label>
+						<input type="radio" name="display" id="numbers" ng-model="totext" ng-value="false">Numbers</input>
+					</label>
+					<label>
+						<input type="radio" name="display" id="words" checked ng-model="totext" ng-value="true">Words</input>
+					</label>
+				</div>
+				<div class="col-sm-3 text-center">
+				</div>
 			</div>
-			<div class="col-sm-4 text-center">
-				<h1 class="lead">You Hit <em>50 Billion {{units}}</em> On:</h1>
-				<p class="date">{{fiftybillion | date}}</p>
+			<div class="row">
+				<div class="col-sm-4 text-center">
+					<h1 class="lead">You Hit <em>1 Billion {{units}}</em> On:</h1>
+					<p class="date">{{billion | date}}</p>
+				</div>
+				<div class="col-sm-4 text-center">
+					<h1 class="lead">You Hit <em>25 Billion {{units}}</em> On:</h1>
+					<p class="date">{{twentyfivebillion | date}}</p>
+				</div>
+				<div class="col-sm-4 text-center">
+					<h1 class="lead">You Hit <em>50 Billion {{units}}</em> On:</h1>
+					<p class="date">{{fiftybillion | date}}</p>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
+	<footer class="panel footer">
+		<div class="container-fluid" id="footerContainer">
+			<span class="text-muted">Designed and developed by <a href="https://github.com/johnsfleming" target="_blank">John Fleming</a></span>
+		</div>
+	</footer>
 </div>
 
 <script>
 angular.module("SolarTravel", [])
 	.controller("solarCtrl", function($scope, $filter, $interval) {
-		$scope.calculated = false;
 		$scope.totext = false;
 		$scope.today = new Date();
 		$scope.units = 'Miles';
+		var currentTime = Date.now();
 	
 		$scope.distanceCalculator = function(){
-			$scope.difference = ($scope.currentTime - $scope.birthday)
-			$scope.meters = Math.round($scope.difference / 1000 * 30);
-			$scope.miles = Math.round($scope.difference / 60 / 60 * 67);
+			var difference = (currentTime - $scope.birthday)
+			var meters = Math.round(difference / 1000 * 30);
+			var miles = Math.round(difference / 60 / 60 * 67);
 			if($scope.units=="Miles"){
-				$scope.distance = $scope.miles;
+				$scope.distance = miles;
 				$scope.billion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 621);
 				$scope.twentyfivebillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 15522);
 				$scope.fiftybillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 31044);
 			}
 			else{
-				$scope.distance = $scope.meters;
+				$scope.distance = meters;
 				$scope.billion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 385);
 				$scope.twentyfivebillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 9645);
 				$scope.fiftybillion = new Date($scope.birthday.getFullYear(), $scope.birthday.getMonth(), $scope.birthday.getDate() + 19290);
@@ -157,7 +127,7 @@ angular.module("SolarTravel", [])
 		}
 		
 		var tick = function() {
-			$scope.currentTime = Date.now();
+			currentTime = Date.now();
 			var test = new Date($scope.birthday);
 			if(test instanceof Date && !isNaN(test.valueOf())){
 				$scope.distanceCalculator();
